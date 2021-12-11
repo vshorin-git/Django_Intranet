@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{%  block content %}
+<h1>Test</h1>
+<h1>В нашей команде {{ emp_count }}</h1>
+    <h1>Новости</h1>
+    {% for new in news %}
+        <h1>{{ new.title }}</h1>
+        <p>{{ new.news_text }}</p>
+        <p>Опубликовано {{ new.updating_date }}</p>
+        <p>Лайков {{ new.likes }}</p>
+    {% endfor%}
+
+{% endblock %}

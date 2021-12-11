@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{%  block content %}
+<h1>В нашей команде {{ emp_count }}</h1>
+<h1>Новостей написано {{ news_count }}</h1>
+<h1>Лайков поставлено {{ likes_count }}</h1>
+<h1>Комментариев оставлено {{ comments_count }}</h1>
+<h1>Видов специальностей {{ role_count }}</h1>
+<h1>Отделов {{ departments_count }}</h1>
+<h1>В нашей команде {{ emp_count }}</h1>
+    <hr>
+    {% if birthdays %}
+        <h1> Ближайшие именинники:
+        {% for person in birthdays %}
+            {{ person.first_name }} {{ person.last_name }} празднует день рождения {{ person.birth_date }}
+        {% endfor %}
+    {% else %}
+        В ближайшее время нет именинников :(
+    {% endif %}
+</h1>
+
+    <h1>Новости</h1>
+    {% for new in news %}
+        <h1>{{ new.title }}</h1>
+        <p>{{ new.news_text }}</p>
+        <button><a href="{% url 'random_profile' %}">Подробнее</a></button>
+        <p>Опубликовано {{ new.updating_date }}</p>
+        <p>Лайков {{ new.likes }}</p>
+    {% endfor%}
+
+{% endblock %}
