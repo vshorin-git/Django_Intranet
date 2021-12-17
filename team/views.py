@@ -104,4 +104,12 @@ def initialize(request):
         new_new = New(title=random_title, text=new_text)
         new_new.save()
 
+    for i in range(100):
+        random_text = random.choice(
+            ['Random comment', 'Common comment', 'Funny comment', 'Scary comment', 'Awful comment', 'Clickbait comment'])
+        random_author = random.choice(Employee.objects.all())
+        random_new = random.choice(New.objects.all())
+        comment = Comment(new=random_new,text=random_text, author=random_author)
+        comment.save()
+
     return HttpResponse('<a href="/"><h1>Initialization complete, go to the main page</h1></a>')

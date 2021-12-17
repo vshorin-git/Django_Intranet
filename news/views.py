@@ -11,8 +11,8 @@ def news(request):
 
 def new_single(request, pk):
     new = New.objects.get(pk__exact=pk)
-    print(f"{new.title} - {new.text}")
-    return render(request, 'new_single.html', context={'news': new, })
+    comments = Comment.objects.filter(new__pk=new.pk)
+    return render(request, 'new_single.html', context={'new': new, "comments": comments})
 
 
 class NewListView(generic.ListView):
