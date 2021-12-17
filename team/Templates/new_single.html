@@ -3,7 +3,6 @@
     <div class="card-body news">
         <h1>News List</h1>
 
-    {% for new in news %}
         <div class="card mb-3">
 {#  <img src="..." class="card-img-top" alt="...">#}
   <div class="card-body">
@@ -11,9 +10,7 @@
     <p class="card-text">{{ new.text }}</p>
     <p class="card-text"><small class="text-muted">Published {{ new.updating_date }}<br>
     {{ new.likes }} likes</small></p>
-            <a href="{% url 'news' %}{{ new.pk }}" class="btn btn-primary">Read more</a>
           </div>
 </div>
-          {% endfor %}
 </div>
 {% endblock %}

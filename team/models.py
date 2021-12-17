@@ -31,7 +31,7 @@ class Employee(models.Model):
         return f"{self.last_name} {self.first_name}"
 
     def get_absolute_url(self):
-        return reverse('profile', kwargs={'employee_email': self.email})
+        return reverse('profile', args=(self.email,))
 
 
 

@@ -1,29 +1,23 @@
-.header a {
-    color:#fff;
-    text-decoration: none;
+.card-body.news {
+    width: 60vw;
+    margin: 0px auto;
+    padding: 15px;
+    margin-top: 50px;
 }
-.header{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: #689CD2;
-    color: #fff;
-    font-family: "Droid Sans Mono Slashed";
-}
-.header_section{
-    display: flex;
-    align-items: center;
 
+.team-table-body {
+    width: 80vw;
+    margin: 0px auto;
+    padding: 15px;
+    margin-top: 50px;
 }
-.header_item{
-    padding: 1px 3px;
-    font-size: 20px;
-    margin-left: 5px;
+
+.card-text {
+    width: 55vw;
+    text-align: justify;
 }
-.header_item:hover{
-    background-color: #FF9900;
-    border-radius: 4px;
-}
-.headerlogo{
-    font-weight:bold;
+
+
+.single_post {
+    margin-bottom: 20px;
 }

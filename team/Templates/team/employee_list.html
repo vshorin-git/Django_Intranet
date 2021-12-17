@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="team-table-body">
+    <h1>Employee List</h1>
+    <br>
+        {% if employee_list %}
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Role</th>
+      <th scope="col">Department</th>
+              <th scope="col">Phole</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">City</th>
+    </tr>
+  </thead>
+        {% for employee in employee_list %}
+  <tbody>
+    <tr>
+      <th scope="row">{{ employee.pk }}</th>
+      <td><a href="{{ employee.get_absolute_url }}">{{ employee.first_name }} {{ employee.last_name }}</a></td>
+      <td>{{ employee.role.role }}</td>
+      <td>{{ employee.role.department }}</td>
+      <td>{{ employee.phone }}</td>
+      <td>{{ employee.email }}</td>
+      <td>{{ employee.city.name }} ,{{ employee.city.country }}</td>
+    </tr>
+  </tbody>
+          {% endfor %}
+        {% else %}
+      <p>There are no employees in the company.</p>
+    {% endif %}
+</table>
+
+{% endblock %}

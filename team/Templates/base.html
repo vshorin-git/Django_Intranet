@@ -3,69 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="/docs/4.1/assets/img/favicons/favicon.ico">
-
-    {% block title %} <title> Our company Intranet site</title> {% endblock %}
+    {% block title %}
+        <title> Our company Intranet site</title>
+    {% endblock %}
     <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="starter-template.css" rel="stylesheet">
-{#    {% load static %}#}
-{#    <link rel="stylesheet" href="{% static 'css/style.css' %}">#}
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="header">
-        <div class="header_section">
-            <div class="header_item leader_logo"><a href="{% url 'index' %}">OurCompany</a></div>
-            <div class="header_item headerButton"><a href="#">Team</a></div>
-            <div class="header_item headerButton"><a href="{% url 'news' %}">News</a></div>
-            <div class="header_item headerButton"><a href="#">Services</a></div>
-            <div class="header_item headerButton"><a href="#">Education</a></div>
-            <div class="header_item headerButton"><a href="{% url 'random_profile' %}">I'm Feeling Lucky</a></div>
-        </div>
-        <div class="header_section">
-{#            <div class="header_item headerButton"><a href="{% url 'profile' %}">My profile</a></div>#}
-            <div class="header_item headerButton"><a href="#">Log in</a></div>
-        </div>
-    </div>
 
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'index' %}">OurCompany</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-      </button>
+    </button>
 
-      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown01">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'team' %}">Team<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'news' %}">News</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'random_profile' %}">I'm Feeling Lucky</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Services</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item" href="http://letters.kremlin.ru/" target="_blank">CRM</a>
+                    <a class="dropdown-item" href="https://guide.michelin.com/ru/ru" target="_blank">Meals</a>
+                    <a class="dropdown-item" href="https://www.udemy.com/" target="_blank">Education</a>
+                </div>
+            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-      </div>
-    </nav>
+                    <a class=" nav-item nav-link" href="{% url 'news' %}">Log in</a>
+    </div>
+</nav>
 {% block content %}{% endblock %}
-
- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
-    <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+<footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+    </ul>
+    <p class="text-center text-muted">© 2021 Company, Inc</p>
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+<script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
