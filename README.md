@@ -22,6 +22,11 @@ source env/bin/activate
 ```
 pip install -r requirements.txt
 ```
+###### Change your database settings
+```
+By default the project uses PostgreSQL, you can use any database you need
+Just edit DATABASES section in intranet_template/settings.py
+```
 ##### Run project
 ```
 python3.10 manage.py runserver

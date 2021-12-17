@@ -26,7 +26,7 @@ def index(request):
         "role_count": Role.objects.all().count(),
         "departments_count": Role.objects.values('department').distinct().count(),
         "likes_count": New.objects.all().aggregate(Sum('likes'))["likes__sum"],
-        "news": New.objects.order_by('-creation_date')[:5],
+        "news": New.objects.order_by('-creation_date')[:3],
     }
     return render(request, 'index.html', context=context)
 
