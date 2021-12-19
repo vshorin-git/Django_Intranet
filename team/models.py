@@ -11,19 +11,20 @@ class Employee(models.Model):
     SEX_CHOICES = [(M, 'Male'), (F, 'Female')]
     sex = models.CharField(max_length=1,choices=SEX_CHOICES, default=M,)
     birth_date = models.DateField(help_text="Choose employee's birth date")
-    photo = models.ImageField()
+    photo = models.ImageField(blank=True)
 
     role = models.ForeignKey('Role', on_delete=models.PROTECT)
     start_date = models.DateField(help_text="Choose employee's start date in the company")
     manager = models.ForeignKey('self', on_delete=models.PROTECT, blank=True, null=True)
-    mailing_groups = models.ManyToManyField('MailingGroup')
+    mailing_groups = models.ManyToManyField('MailingGroup',blank=True)
 
     phone = models.CharField(max_length=15, help_text="Enter employee's phone number")
-    email = models.EmailField(max_length=40, help_text="Enter employee's email address")
+    email = models.EmailField(max_length=40, help_text="Enter employee's email address", )
     city = models.ForeignKey('City', on_delete=models.PROTECT)
 
     description = models.CharField(max_length=2000, help_text="Enter additional info about employee", blank=True)
-
+    is_fired = models.BooleanField(default=False)
+    firing_date = models.DateField(help_text="Choose employee's firing date in the company", blank=True, null=True)
     class Meta:
         ordering = ["last_name", "first_name"]
 

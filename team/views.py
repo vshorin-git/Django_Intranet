@@ -1,9 +1,8 @@
-import os
 import random
-from datetime import date, timedelta, datetime
-from django.http import HttpResponse
+from datetime import date, timedelta
 
-from django.db.models import Q, Sum
+from django.db.models import Sum
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
 
@@ -12,14 +11,15 @@ from .models import Employee, Role, City
 
 
 def index(request):
+    birthdays = []
     start = date.today()
-    start_day, start_month = start.day, start.month
-    end = start + timedelta(days=15)
-    end_day, end_month = end.day, end.month
+    for delta_day in range(7):
+        if Employee.objects.filter(birth_date__month=(start + timedelta(days=delta_day)).month,
+                                   birth_date__day=(start + timedelta(days=delta_day)).day).count() > 0:
+            birthdays.append(Employee.objects.filter(birth_date__month=(start + timedelta(days=delta_day)).month,
+                                                     birth_date__day=(start + timedelta(days=delta_day)).day))
     context = {
-        "birthdays": Employee.objects.filter(Q(employee__birth_date__month=start_month,
-                                               employee__birth_date__day__gt=start_day) | Q(
-            employee__birth_date__month=end_month, employee__birth_date__day__lt=end_day)),
+        "birthdays": birthdays,
         "emp_count": Employee.objects.all().count(),
         "news_count": New.objects.all().count(),
         "comments_count": Comment.objects.all().count(),
@@ -59,39 +59,39 @@ def initialize(request):
         city.save()
 
     for i in range(10):
-        random_male_first_names = random.choice(
+        random_male_first_name = random.choice(
             ['John', 'Bob', 'James', 'Robert', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Charles'])
-        random_male_last_names = random.choice(
+        random_last_name = random.choice(
             ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez'])
         random_birth_date = f"{random.randint(1950, 2000)}-{random.randint(1, 12):02d}-{random.randint(1, 28):02d}"
-        random_photo = random.choice(os.listdir("D:\\MyPython\\Django_Intranet\\team\static\\"))
         random_role = random.choice(Role.objects.all())
         random_start_date = f"{random.randint(2019, 2020)}-{random.randint(1, 12):02d}-{random.randint(1, 28):02d}"
         random_phone = f"+{random.randint(10000000000, 99999999999)}"
-        random_email = f"{random_male_first_names.lower()[0]}{random_male_last_names.lower()}@company.com"
+        random_email = f"{random_male_first_name.lower()[0]}{random_last_name.lower()}@company.com"
         random_city = random.choice(City.objects.all())
-        employee = Employee(first_name=random_male_first_names, last_name=random_male_last_names, sex="M",
-                            birth_date=random_birth_date, start_date=random_start_date, photo=random_photo,
+        employee = Employee(first_name=random_male_first_name, last_name=random_last_name, sex="M",
+                            birth_date=random_birth_date, start_date=random_start_date,
                             role=random_role, phone=random_phone, email=random_email, city=random_city)
-        employee.save()
+
+        if Employee.objects.filter(first_name=random_male_first_name, last_name=random_last_name).count() == 0:
+            employee.save()
 
     for i in range(10):
-        random_male_first_names = random.choice(
+        random_female_first_name = random.choice(
             ['Olivia', 'Emma', 'Ava', 'Charlotte', 'Sophia', 'Isabella', 'Madison', 'Alexis', 'Hannah', 'Sarah'])
-        random_male_last_names = random.choice(
+        random_last_name = random.choice(
             ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez'])
         random_birth_date = f"{random.randint(1950, 2000)}-{random.randint(1, 12):02d}-{random.randint(1, 28):02d}"
-        random_photo = random.choice(os.listdir("D:\\MyPython\\Django_Intranet\\team\\static\\"))
         random_role = random.choice(Role.objects.all())
         random_start_date = f"{random.randint(2019, 2020)}-{random.randint(1, 12):02d}-{random.randint(1, 28):02d}"
         random_phone = f"+{random.randint(10000000000, 99999999999)}"
-        random_email = f"{random_male_first_names.lower()[0]}{random_male_last_names.lower()}@company.com"
+        random_email = f"{random_female_first_name.lower()[0]}{random_last_name.lower()}@company.com"
         random_city = random.choice(City.objects.all())
-        employee = Employee(first_name=random_male_first_names, last_name=random_male_last_names, sex="F",
-                            birth_date=random_birth_date, start_date=random_start_date, photo=random_photo,
+        employee = Employee(first_name=random_female_first_name, last_name=random_last_name, sex="F",
+                            birth_date=random_birth_date, start_date=random_start_date,
                             role=random_role, phone=random_phone, email=random_email, city=random_city)
-        employee.save()
-
+        if Employee.objects.filter(first_name=random_female_first_name, last_name=random_last_name).count() == 0:
+            employee.save()
 
     for i in range(10):
         random_title = random.choice(
@@ -99,17 +99,18 @@ def initialize(request):
         with open("D:\\MyPython\\Django_Intranet\\team\\loren_ipsum.txt", "r") as text:
             text2 = text.readlines()
             new_text = ""
-            for line in text2[i*5:i*5+5]:
+            for line in text2[i * 5:i * 5 + 5]:
                 new_text += line
         new_new = New(title=random_title, text=new_text)
         new_new.save()
 
     for i in range(100):
         random_text = random.choice(
-            ['Random comment', 'Common comment', 'Funny comment', 'Scary comment', 'Awful comment', 'Clickbait comment'])
+            ['Random comment', 'Common comment', 'Funny comment', 'Scary comment', 'Awful comment',
+             'Clickbait comment'])
         random_author = random.choice(Employee.objects.all())
         random_new = random.choice(New.objects.all())
-        comment = Comment(new=random_new,text=random_text, author=random_author)
+        comment = Comment(new=random_new, text=random_text, author=random_author)
         comment.save()
 
     return HttpResponse('<a href="/"><h1>Initialization complete, go to the main page</h1></a>')

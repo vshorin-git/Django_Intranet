@@ -42,11 +42,13 @@
 <h1>Видов специальностей {{ role_count }}</h1>
 <h1>Отделов {{ departments_count }}</h1>
     <hr>
-            <h1> Ближайшие именинники:
+            <h1> Ближайшие именинники:<br>
     {% if birthdays %}
 
-        {% for person in birthdays %}
-            {{ person.first_name }} {{ person.last_name }} празднует день рождения {{ person.birth_date }}
+        {% for day_persons in birthdays %}
+                    {% for person in day_persons %}
+            {{ person.first_name }} {{ person.last_name }} празднует день рождения {{ person.birth_date }}<br>
+              {% endfor %}
         {% endfor %}
     {% else %}
         <h2>В ближайшее время нет именинников :(</h2>

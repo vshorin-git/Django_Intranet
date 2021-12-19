@@ -6,6 +6,7 @@ from team.models import Employee
 class New(models.Model):
     title = models.CharField(max_length=100, help_text="Enter title")
     text = models.TextField(max_length=10000, help_text="Enter text")
+    image = models.ImageField()
     creation_date = models.DateTimeField(auto_now_add=True)
     updating_date = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
@@ -20,6 +21,12 @@ class New(models.Model):
     def get_absolute_url(self):
         return reverse('news_single', args=(self.pk,""))
 
+    def likes_adding(self):
+        self.likes += 1
+
+    def likes_deducting(self):
+        self.likes -= 1
+
 
 class Comment(models.Model):
     new = models.ForeignKey(New, on_delete=models.CASCADE)
@@ -27,6 +34,13 @@ class Comment(models.Model):
     author = models.ForeignKey(Employee, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
     updating_date = models.DateTimeField(auto_now=True)
+    likes = models.SmallIntegerField(default=0)
+
+    def likes_adding(self):
+        self.likes += 1
+
+    def likes_deducting(self):
+        self.likes -= 1
 
     class Meta:
         ordering = ["-creation_date"]
