@@ -3,17 +3,28 @@
     <div class="card-body news">
         <h1>News List</h1>
 
-    {% for new in news %}
+    {% for new in page_obj %}
         <div class="card mb-3">
 {#  <img src="..." class="card-img-top" alt="...">#}
   <div class="card-body">
     <h5 class="card-title">{{ new.title }}</h5>
-    <p class="card-text">{{ new.text }}</p>
+    <p class="card-text">{{ new.text|truncatewords:50 }}</p>
     <p class="card-text"><small class="text-muted">Published {{ new.updating_date }}<br>
     {{ new.likes }} likes</small></p>
             <a href="{% url 'news' %}{{ new.pk }}" class="btn btn-primary">Read more</a>
           </div>
 </div>
           {% endfor %}
+    <nav aria-label="Page navigation">
+  <ul class="pagination">
+              {% if page_obj.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% endif %}
+    <li class="page-item"><a class="page-link" href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+         {% if page_obj.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+         {% endif %}
+  </ul>
+</nav>
 </div>
 {% endblock %}

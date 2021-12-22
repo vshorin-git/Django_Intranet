@@ -6,49 +6,32 @@
     {% block title %}
         <title> Our company Intranet site</title>
     {% endblock %}
-    <link href="https://getbootstrap.com/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         {% load static %}
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
 
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="{% url 'index' %}">OurCompany</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{% url 'team' %}">Team<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'news' %}">News</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'random_profile' %}">I'm Feeling Lucky</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Services</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="http://letters.kremlin.ru/" target="_blank">CRM</a>
-                    <a class="dropdown-item" href="https://guide.michelin.com/ru/ru" target="_blank">Meals</a>
-                    <a class="dropdown-item" href="https://www.udemy.com/" target="_blank">Education</a>
-                </div>
-            </li>
+<header class="header">
+{#    <img src="" alt="Logo" class="logo">#}
+    <a href="{% url 'index' %}">OurCompany</a>
+    <nav>
+        <ul class="nav_links">
+            <li><a href="{% url 'team' %}">Team</a></li>
+            <li><a href="{% url 'news' %}">News</a></li>
+            <li><a href="{% url 'random_profile' %}">I'm Feeling Lucky</a></li>
+            <li><a href="#">Services</a></li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-                    <a class=" nav-item nav-link" href="{% url 'news' %}">Log in</a>
+    </nav>
+    <div class="btn-group" role="group" aria-label="Basic example">
+    <a class="btn btn-outline-light" href="#" role="button">Login</a>
+    <a class="btn btn-outline-light" href="#" role="button">Register</a>
     </div>
-</nav>
+
+</header>
+<div class="wrapper">
 {% block content %}{% endblock %}
+</div>
 <footer class="py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
@@ -58,7 +41,6 @@
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
     </ul>
     <p class="text-center text-muted">© 2021 Company, Inc</p>
-</footer>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
 <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>

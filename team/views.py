@@ -6,11 +6,14 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
 
+
 from news.models import New, Comment
 from .models import Employee, Role, City
+from django.views.decorators.cache import cache_page
 
-
+@cache_page(3600)
 def index(request):
+    current_user = request.user
     birthdays = []
     start = date.today()
     for delta_day in range(7):
@@ -42,6 +45,7 @@ def profile(request, email):
 
 
 class EmployeeListView(generic.ListView):
+    paginate_by = 10
     model = Employee
 
 
@@ -49,38 +53,44 @@ def initialize(request):
     roles = {'Marketing': 'Worker', 'Finance': 'Worker', 'IT': 'Worker', 'Product': 'Worker', 'Product': 'Manager',
              'Marketing': 'Manager', 'IT': 'Manager', 'Finance': 'Manager'}
     for key, value in roles.items():
-        role = Role(department=key, role=value)
-        role.save()
+        if Role.objects.filter(department=key, role=value).count() == 0:
+            role = Role(department=key, role=value)
+            role.save()
 
     cities = {'Krasnodar': 'Russia', 'Moscow': 'Russia', 'New York': 'USA', 'Los Angeles': 'USA', 'Berlin': 'Germany',
               'London': 'UK'}
     for key, value in cities.items():
-        city = City(name=key, country=value)
-        city.save()
+        if City.objects.filter(name=key, country=value).count() == 0:
+            city = City(name=key, country=value)
+            city.save()
+
 
     for i in range(10):
         random_male_first_name = random.choice(
             ['John', 'Bob', 'James', 'Robert', 'William', 'David', 'Richard', 'Joseph', 'Thomas', 'Charles'])
         random_last_name = random.choice(
             ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez'])
+        random_email = f"{random_male_first_name.lower()[0]}{random_last_name.lower()}@company.com"
+        if Employee.objects.filter(first_name=random_male_first_name, last_name=random_last_name).count() != 0:
+            continue
         random_birth_date = f"{random.randint(1950, 2000)}-{random.randint(1, 12):02d}-{random.randint(1, 28):02d}"
         random_role = random.choice(Role.objects.all())
         random_start_date = f"{random.randint(2019, 2020)}-{random.randint(1, 12):02d}-{random.randint(1, 28):02d}"
         random_phone = f"+{random.randint(10000000000, 99999999999)}"
-        random_email = f"{random_male_first_name.lower()[0]}{random_last_name.lower()}@company.com"
         random_city = random.choice(City.objects.all())
         employee = Employee(first_name=random_male_first_name, last_name=random_last_name, sex="M",
                             birth_date=random_birth_date, start_date=random_start_date,
                             role=random_role, phone=random_phone, email=random_email, city=random_city)
-
-        if Employee.objects.filter(first_name=random_male_first_name, last_name=random_last_name).count() == 0:
-            employee.save()
+        employee.save()
 
     for i in range(10):
         random_female_first_name = random.choice(
             ['Olivia', 'Emma', 'Ava', 'Charlotte', 'Sophia', 'Isabella', 'Madison', 'Alexis', 'Hannah', 'Sarah'])
         random_last_name = random.choice(
             ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez'])
+        random_email = f"{random_female_first_name.lower()[0]}{random_last_name.lower()}@company.com"
+        if Employee.objects.filter(first_name=random_female_first_name, last_name=random_last_name).count() != 0:
+            continue
         random_birth_date = f"{random.randint(1950, 2000)}-{random.randint(1, 12):02d}-{random.randint(1, 28):02d}"
         random_role = random.choice(Role.objects.all())
         random_start_date = f"{random.randint(2019, 2020)}-{random.randint(1, 12):02d}-{random.randint(1, 28):02d}"
@@ -90,8 +100,7 @@ def initialize(request):
         employee = Employee(first_name=random_female_first_name, last_name=random_last_name, sex="F",
                             birth_date=random_birth_date, start_date=random_start_date,
                             role=random_role, phone=random_phone, email=random_email, city=random_city)
-        if Employee.objects.filter(first_name=random_female_first_name, last_name=random_last_name).count() == 0:
-            employee.save()
+        employee.save()
 
     for i in range(10):
         random_title = random.choice(
